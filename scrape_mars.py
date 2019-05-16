@@ -1,33 +1,35 @@
+
+#!/usr/bin/env python
+# coding: utf-8
+
+# ## NASA Mars News
+# * Scrape the NASA Mars News Site and collect the latest News Title and Paragraph Text. Assign the text to variables that you can reference later.
+
+# In[1]:
+
+
+# Dependencies
+from splinter import Browser
+from bs4 import BeautifulSoup
+import pandas as pd
+import requests
+import json
+import IPython
+
+
+# In[2]:
+
+
+def init_browser():
+    # @NOTE: Replace the path with your actual path to the chromedriver
+    executable_path = {"executable_path": "/usr/local/bin/chromedriver"}
+    return Browser("chrome", **executable_path, headless=False)
+
+
+# In[3]:
+
 def scrape():
-    #!/usr/bin/env python
-    # coding: utf-8
-
-    # ## NASA Mars News
-    # * Scrape the NASA Mars News Site and collect the latest News Title and Paragraph Text. Assign the text to variables that you can reference later.
-
-    # In[1]:
-
-
-    # Dependencies
-    from splinter import Browser
-    from bs4 import BeautifulSoup
-    import pandas as pd
-    import requests
-    import json
-    import IPython
-
-
-    # In[2]:
-
-
-    get_ipython().system('which chromedriver')
-
-
-    # In[3]:
-
-
-    executable_path = {'executable_path': '/usr/local/bin/chromedriver'}
-    browser = Browser('chrome', **executable_path, headless=False)
+    browser = init_browser()
     url = 'https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest'
     browser.visit(url)
 
@@ -189,7 +191,7 @@ def scrape():
             img_title = soup_loop.find('h2', class_='title')
             img_url = ((soup_loop.find('ul')).find('li')).find('a')
             hemi_img_urls.append(
-            {'title': (img_title.text).strip(' Enhanced'),
+            {'title': ((img_title.text).strip('Enhanced')).strip(),
             'img_url': img_url.get('href')
             })
             
@@ -216,14 +218,8 @@ def scrape():
 
 
     # In[20]:
+    browser.quit()
 
-
-    print(scraped_dict)
-
-
-    # In[ ]:
-
-scrape()
-
+    return(scraped_dict)
 
 
