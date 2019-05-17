@@ -22,18 +22,18 @@
     </div>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-lg-7">
+        <div class="col-lg-8">
           <h2>Featured Image</h2>
-          <img src="{{ mars_info.featured_mars_image }}" alt="Mars Photo">
+          <img width='800' src="{{ mars_info.featured_mars_image }}" alt="Mars Photo">
         </div>
         <div class="col-lg-4">
           <h2>Current Weather on Mars</h2>
           <p>{{ mars_info.mars_weather }}</p>
           <h2>Facts about Mars</h2>
-          {{ mars_info.mars_facts }}
+          {{ mars_info.mars_facts | safe }}
         </div>
       </div>
-    <div class="container-fluid">
+    <div class="container-fluid my-box">
       <h2>Mars Hemispheres</h2>
       <div class="row">
         <div class="col-lg-3">

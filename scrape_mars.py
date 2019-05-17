@@ -15,6 +15,7 @@ import pandas as pd
 import requests
 import json
 import IPython
+import time
 
 
 # In[2]:
@@ -33,6 +34,7 @@ def scrape():
     url = 'https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest'
     browser.visit(url)
 
+    time.sleep(5)
 
     # In[4]:
 
@@ -125,24 +127,14 @@ def scrape():
     # In[13]:
 
 
-    facts_table = pd.read_html('https://space-facts.com/mars')
+    facts_table = pd.read_html('https://space-facts.com/mars', index_col=0)
 
 
     # In[14]:
 
 
     facts_df = facts_table[0]
-    facts_df = facts_df.rename(columns={1: 'Values',
-                                        0: 'Facts'})
-    facts_df = facts_df.set_index('Facts')
-
-    # facts_df
-
-
-    # In[15]:
-
-
-    facts_html = facts_df.to_html()
+    facts_html = facts_df.to_html(header=False)
     facts_html = facts_html.replace('\n', '')
     # facts_html
 
